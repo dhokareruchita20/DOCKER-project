@@ -2,55 +2,35 @@
 
 This guide provides step-by-step instructions for setting up a React project.
 
-## 1. Setting Up the React Project
-
-### Install Node.js and npm
+## 1. Go to frontend 
 
 ```shell
-apt update && apt install nodejs npm -y
+cd Easycrud/frontend
 ```
 
-### Verify Installation
+## 2. edit .env file
 
+To edit the .env file, run the following command:
 
 ```shell
-node -v
-npm -v
+nano .env
 ```
+change ip address
 
+## 3. Build docker image
 
-## 2. Install Dependencies
-
-To install the necessary dependencies for your project, run the following command:
+To build the docker image, run:
 
 ```shell
-npm install
+docker build . -t frontend:v1
 ```
+frontend:v1 is the name of an image
 
-## 3. Build the React Application for Production
-
-Update backend URL in .env file
+## 4. Create container from docker image
 
 ```shell
-vim .env 
-
-    VITE_API_URL = "http://<BACKEND_PUBLIC_IP>:8080/api"
+docker run -d -p 80:80 --name frontend frontend:v1
 ```
-
-To build the React application for production, run:
-
-```shell
-npm run build
-```
-
-This will create a dist/ directory in your project containing optimized, production-ready files.
-
-## 4. Deploy production-ready files on s3 or apache2 server
-
-```shell
-apt install apache2 -y
-systemctl start apache2
-cp -rf dist/* /var/www/html/
-```
+frontend is the name of container 
 
 You can access the application on http://localhost:80
