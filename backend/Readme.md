@@ -1,43 +1,27 @@
-# Spring Boot Backend Deployment Guide 
+# Backend Deployment Guide 
 
-## Prerequisites
+## Step 1: Install docker
 
-- Java Development Kit (JDK 17 or higher) installed.
-- Maven installed.
-- Spring Boot application source code or JAR file.
-
-## Step 1: Install Java
-
-1. Verify if Java is installed by running the following command:
+1. Verify if docker is installed by running the following command:
 
    ```bash
-   java -version
+   docker -version
    ```
 
-If Java is not installed, install the JDK from OpenJDK.
+If Java is not installed, install the docker.
 
 ```shell
-apt update && apt install openjdk-17-jdk -y
-java -version
+apt update && apt install docker.io -y
 ```
 
-## Step 2: Install Maven
-
-Installing maven in ubuntu:
+## Step 2: clone the repository
 
 ```shell
-apt install maven -y
+git clone (repository url)
 ```
-
-### Verify Maven installation:
-
-```bash
-
-mvn -version
-```
+Go to EasyCRUD/backend
 
 ## Step 3: Build the Spring Boot Application
-
 ### Update DB credentials in application.properties:
 
 ```shell
@@ -51,25 +35,19 @@ vim src/main/resources/application.properties
    spring.datasource.password=<DB_PASS>
 ```
 
-### Build springboot Application using maven
+## Step 4: create docker image
 
 ```shell
-mvn clean package
+docker build . -t backend:v1
 ```
 
-## Step 4: Run the Application
-
-Run the generated JAR file by using the following command:
+## Step 5: create container from image 
 
 ```bash
-
-java -jar target\spring-backend-v1.jar
+docker run -d -p 8080:8080 --name backend backend:v1
 ```
 
 The application will start and be accessible at:
 
 http://localhost:8080
 
-### Step 5: Keep the Application Running
-
-To keep the application running in the background, you can use nohup or a similar method. 
